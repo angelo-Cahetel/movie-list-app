@@ -2,6 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'https://*.vercel.app',
+    'https://vercel.app'
+  ],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
 // Importar rotas
 const movieRoutes = require('./src/routes/movieRoutes');
 const favoriteRoutes = require('./src/routes/favoriteRoutes');
@@ -11,7 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middlewares
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Rotas
