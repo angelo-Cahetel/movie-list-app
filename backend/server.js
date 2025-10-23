@@ -1,31 +1,61 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+
+// Importar rotas
 const movieRoutes = require('./src/routes/movieRoutes');
 const favoriteRoutes = require('./src/routes/favoriteRoutes');
 const shareRoutes = require('./src/routes/shareRoutes');
-const errorHandler = require('./src/middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// rotas
-app.use("/api/movies", movieRoutes);
-app.use("/api/favorites", favoriteRoutes);
-app.use("/api/share", shareRoutes);
-app.use("/api/shared", shareRoutes);
+// Rotas
+app.use('/api/movies', movieRoutes);
+app.use('/api/favorites', favoriteRoutes);
+app.use('/api/share', shareRoutes);
+app.use('/api/shared', shareRoutes);
 
-// health check
-app.get("/health", (req, res) => {
-    res.json({ status: "OK", timestamp: new Date().toISOString() });
+// Health check
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
 });
 
-// tratativa de erros
-app.use(errorHandler);
+// Rota raiz
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Movie List API',
+    version: '1.0.0',
+    endpoints: {
+      movies: '/api/movies',
+      favorites: '/api/favorites',
+      share: '/api/share',
+      health: '/health'
+    }
+  });
+});
 
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error'
+  });
+});
+
+// Iniciar servidor
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
+  console.log(`API Base: http://localhost:${PORT}/api`);
 });
+
+module.exports = app;
