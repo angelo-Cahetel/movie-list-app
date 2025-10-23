@@ -1,10 +1,10 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const movieRoutes = require("./routes/movieRoutes");
-const favoriteRoutes = require("./routes/favoriteRoutes");
-const shareRoutes = require("./routes/shareRoutes");
-const errorHandler = require("./middleware/errorHandler");
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const movieRoutes = require('./src/routes/movieRoutes');
+const favoriteRoutes = require('./src/routes/favoriteRoutes');
+const shareRoutes = require('./src/routes/shareRoutes');
+const errorHandler = require('./src/middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
