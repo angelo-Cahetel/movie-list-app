@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { Search, Star, Share2, Trash2, Plus, ExternalLink, Loader } from 'lucide-react';
 
