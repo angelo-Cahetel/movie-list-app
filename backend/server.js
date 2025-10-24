@@ -5,8 +5,7 @@ const cors = require('cors');
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'https://*.vercel.app',
-    'https://vercel.app'
+    'https://movie-list-app-ashen.vercel.app/',
   ],
   credentials: true,
   optionsSuccessStatus: 200
